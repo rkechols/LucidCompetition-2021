@@ -74,13 +74,12 @@ if __name__ == "__main__":
         balloon = Balloon(*map(int, input().split()))
         balloons.append(balloon)
     balloons.sort(key=lambda b: b.z, reverse=True)
-    cur_x, cur_y, cur_z = START_LOCATION
+    cur_x, cur_y, _ = START_LOCATION
     for balloon in balloons:
-        if balloon.z > cur_z:
+        if balloon.z > START_LOCATION[2]:
             continue
         if balloon.in_radius(cur_x, cur_y):  # collision
             cur_x, cur_y = balloon.slide(cur_x, cur_y)
-        cur_z = balloon.z
     cur_x = int(cur_x)
     cur_y = int(cur_y)
     print(f"{cur_x} {cur_y}")
