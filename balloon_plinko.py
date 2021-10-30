@@ -2,8 +2,9 @@ import math
 from typing import Tuple
 
 
-TOTAL_DEGS = 360
-HALF_DEGS = TOTAL_DEGS // 2
+TOTAL_DEGS = 2 * math.pi
+HALF_DEGS = math.pi
+QUARTER_DEGS = math.pi / 2
 
 START_LOCATION = (0, 0, 1500)
 
@@ -12,32 +13,21 @@ def distance(x1: float, y1: float, x2: float, y2: float) -> float:
     return math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2))
 
 
-def to_rads(theta: float) -> float:
-    return (theta * 2 * math.pi) / TOTAL_DEGS
-
-
-def to_degs(theta: float) -> float:
-    return (theta * TOTAL_DEGS) / (2 * math.pi)
-
-
 def sin(theta: float) -> float:
-    theta_rad = to_rads(theta)
-    return math.sin(theta_rad)
+    return math.sin(theta)
 
 
 def cos(theta: float) -> float:
-    theta_rad = to_rads(theta)
-    return math.cos(theta_rad)
+    return math.cos(theta)
 
 
 def inverse_tan(x_delta: float, y_delta: float) -> float:
     if round(x_delta) == 0:
         if y_delta > 0:
-            return 90
+            return QUARTER_DEGS
         else:
-            return -90
-    theta_rad = math.atan(y_delta / x_delta)
-    theta = to_degs(theta_rad)
+            return -1 * QUARTER_DEGS
+    theta = math.atan(y_delta / x_delta)
     if x_delta < 0:
         theta = theta + HALF_DEGS
         if theta > HALF_DEGS:
